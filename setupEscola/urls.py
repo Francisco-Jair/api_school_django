@@ -16,15 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
-from escola.views import AlunosViewSet, CursosViewSet
+from escola.views import AlunosViewSet, CursosViewSet, MatriculaViewSet, ListMatriculasAluno, ListaAlunosMatriculados
 from rest_framework import routers
 
 
 router = routers.DefaultRouter()
 router.register('alunos', AlunosViewSet, basename='alunos')
 router.register('cursos', CursosViewSet, basename='cursos')
+router.register('matriculas', MatriculaViewSet, basename='matriculas')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('aluno/<int:pk>/matriculas', ListMatriculasAluno.as_view()),
+    path('curso/<int:pk>/matriculas', ListaAlunosMatriculados.as_view())
 ]
